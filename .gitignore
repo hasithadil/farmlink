@@ -1,17 +1,41 @@
-# ignoring the config file because it may vary from one environment to another
+# ── Application config (environment-specific) ──────────────────────────────
 app/config/config.php
-
-# ignoring the environment file
 app/config/.env
 
-# ignoring the public uploads dir
+# ── Uploads (user-generated files) ──────────────────────────────────────────
 public/uploads/
 public/upload/
 public/d_uploads/
 public/public/
 
-# ignoring the vendor dir
+# ── PHP dependencies ─────────────────────────────────────────────────────────
 vendor/
-
-# ignoring the composer.lock file
 composer.lock
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── OS files ─────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDE / Editor files ───────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# ── Temporary / cache files ───────────────────────────────────────────────────
+*.tmp
+*.temp
+*.cache
