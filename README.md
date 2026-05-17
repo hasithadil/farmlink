@@ -13,7 +13,7 @@ FarmLink is a full-stack PHP web platform that connects **farmers**, **buyers**,
 | Type | Multi-role web application |
 | Language | PHP (custom MVC) |
 | Database | MySQL |
-| Payment | PayHere (Sri Lanka) |
+| Payment | PayHere |
 | Maps | Google Maps |
 | Email | PHPMailer + SMTP |
 | Auth | PHP Sessions + `password_hash` / `password_verify` |
@@ -63,91 +63,6 @@ app/
     mailer_config.php       ← PHPMailer SMTP setup
 ```
 
----
-
-## Architecture Diagram
-
-```mermaid
-graph TB
-    Browser["Browser / Client"]
-
-    subgraph "Apache Web Server"
-        HTA[".htaccess URL Rewrite"]
-        Entry["public/index.php"]
-    end
-
-    subgraph "MVC Core (app/libraries)"
-        Core["Core.php\n(Router)"]
-        BaseCtrl["Controller.php\n(Base Controller)"]
-        DB["Database.php\n(PDO Wrapper)"]
-    end
-
-    subgraph "Controllers (app/controllers)"
-        Users["Users\n(Auth, Password Reset)"]
-        Farmers["Farmers\n(Stock, Orders, Sales)"]
-        Buyers["Buyercontrollers\n(Browse, Cart, Orders)"]
-        OrderCtrl["orderControllers\n(Address, Review, Complaints)"]
-        Admins["Admins\n(Dashboard, Reports)"]
-        Consultants["Consultants\n(Profile, Availability)"]
-        Dpersons["Dpersons\n(Pickup, Delivery)"]
-        Dpaccounts["Dpaccounts\n(Revenue, Account)"]
-        Appointments["Appointments\n(Book, Accept, Decline)"]
-        Forums["Forums\n(Q&A)"]
-        Notifications["Notifications\n(JSON API)"]
-    end
-
-    subgraph "Models (app/models)"
-        MFarmer["Farmer"]
-        MBuyer["Buyer"]
-        MAdmin["Admin"]
-        MOrder["Order"]
-        MConsultant["Consultant"]
-        MDperson["Dperson"]
-        MDpaccount["Dpaccount"]
-        MAppointment["Appointment"]
-        MNotification["Notification"]
-        MComplaint["Complaint"]
-    end
-
-    subgraph "MySQL Database"
-        T1["farmers / buyers / admins\nconsultants / delivery_persons"]
-        T2["fproducts / exp_products\nbuyer_carts / wishlist"]
-        T3["order_process / order_success\norder_buyer / order_buyer_addr"]
-        T4["appointments\nconsultant_availability"]
-        T5["forum_questions\nforum_answers"]
-        T6["complaints\nfarmer_reviews"]
-        T7["notify_farmer / notify_buyer\nnotify_dperson / notify_consultant\nnotify_admin"]
-    end
-
-    subgraph "External Services"
-        PayHere["PayHere\n(Payment Gateway)"]
-        GoogleMaps["Google Maps\n(Distance Matrix API)"]
-        SMTP["SMTP Server\n(PHPMailer)"]
-    end
-
-    Browser --> HTA
-    HTA --> Entry
-    Entry --> Core
-    Core --> BaseCtrl
-    BaseCtrl --> Users & Farmers & Buyers & OrderCtrl & Admins
-    BaseCtrl --> Consultants & Dpersons & Dpaccounts & Appointments & Forums & Notifications
-    Farmers --> MFarmer --> DB
-    Buyers --> MBuyer --> DB
-    Admins --> MAdmin --> DB
-    OrderCtrl --> MOrder --> DB
-    Consultants --> MConsultant --> DB
-    Dpersons --> MDperson --> DB
-    Dpaccounts --> MDpaccount --> DB
-    Appointments --> MAppointment --> DB
-    Forums --> MFarmer & MConsultant
-    Notifications --> MNotification --> DB
-    DB --> T1 & T2 & T3 & T4 & T5 & T6 & T7
-    OrderCtrl --> GoogleMaps
-    Buyers --> PayHere
-    Users --> SMTP
-```
-
----
 
 ## User Roles
 
